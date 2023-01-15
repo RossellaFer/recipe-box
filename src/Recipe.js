@@ -1,14 +1,14 @@
 export function Recipe(props) {
-    const ingredients = props.ingredients.split(' / ');
+    const ingredients = props.ingredients;
     const ingredientsList = ingredients.map((ingredient, index) => {
         return <li key={index}>{ingredient}</li>
     });
     
-    const steps = props.steps.split(' / ');
+    const steps = props.steps;
     const stepsList = steps.map((step, index) => {
         return <li key={index}>{step}</li>
     });
-
+ 
     return (
         <>
             <header className='basis-1/8 py-4'>

@@ -1,48 +1,91 @@
-const RecipeForm = (props) => {
+import { useState, } from "react";
+
+const RecipeForm = ({showModal, setShowModal, onSave, currentRecipe = {}}) => {
+  const [recipeData, setRecipeData] = useState(currentRecipe);
+  const [errors, setErrors] = useState('');
+
+  const { title, ingredients, steps } = recipeData;
+
+  const validateData = () => {
+    let errors = {};
+    if(!title) {
+      errors.title = "Title is required";
+    }
+
+    if(!ingredients) {
+      errors.ingredients = 'Ingredients are required';
+    }
+
+    if(!steps) {
+      errors.steps = "Steps are required";
+    }
+    
+    return errors;
+  }
+
+  const handleChange = (event) => {
+    const {name, value} = event.target;
+    setRecipeData((prevData) => ({...prevData, [name]: value}));
+  }
+
+  const handleSave = () => {
+    const errors = validateData();
+    if(Object.keys(errors).length) {
+      setErrors(errors);
+      return;
+    }
+
+    setErrors({});
+    onSave(recipeData);
+  }
+  
   return (
     <>
-      {props.showModal ? (
+      {showModal.show ? (
         <>
         <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto z-50 fixed inset-0 bg-gray bg-opacity-75">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+            <div className="relative w-auto my-6 mx-auto max-w-3xl min-w-[400px]">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
-                  <h3 className="text-3xl font-bold text-orange">Add recipe</h3>
+                  <h3 className="text-3xl font-bold text-orange-600">Add recipe</h3>
                   <button
                     className="bg-transparent border-0 text-black float-right"
                   >
-                    <span className="text-black opacity-7 h-6 w-6 text-xl block bg-gray-400 py-0 rounded-full" onClick={() => props.setShowModal(false)}>
+                    <span className="text-black opacity-7 h-6 w-6 text-xl block bg-gray-400 py-0 rounded-full" onClick={() => setShowModal({show: false, editMode: false})}>
                         X
                     </span>
                   </button>
                 </div>
                 <div className="relative p-6 flex-auto">
-                  <form className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full">
-                    <label className="block text-black text-sm font-bold mb-1">
+                  <form className="px-8 pt-6 pb-8 w-full">
+                    <label for="title" className="block text-black text-sm font-bold mb-1">
                       Title
                     </label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                    <label className="block text-black text-sm font-bold mb-1">
+                    <input className="shadow appearance-none border rounded w-full mb-2 py-2 px-1 text-black" type="text" name="title" value={title} onChange={handleChange}/>
+                    <div className="text-red-500 leading-4 min-h-[15px] mb-2 font-bold">{errors.title}</div>
+                    <label for="ingredients" className="block text-black text-sm font-bold mb-1">
                       Ingredients
                     </label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
-                    <label className="block text-black text-sm font-bold mb-1">
+                    <textarea placeholder={'Separate each ingredient with a "\\": \n\nMilk \\ 2 Eggs \\ 1/3 Cup Sugar'} className="shadow appearance-none border rounded w-full py-2 px-2 text-black text-sm min-h-[80px]" name="ingredients" value={ingredients} onChange={handleChange}/>
+                    <div className="text-red-500 leading-4 min-h-[15px] mb-2 font-bold">{errors.ingredients}</div>
+                    <label for="steps" className="block text-black text-sm font-bold mb-1">
                       Steps
                     </label>
-                    <input className="shadow appearance-none border rounded w-full py-2 px-1 text-black" />
+                    <textarea placeholder={'Separate each step with a "\\": \n\nPreheat oven to 350°F \\ \nCombine ingredients in pie crust \\ \nBake until crust is golden brown. \\'} className="shadow appearance-none border rounded w-full py-2 px-2 text-black text-sm min-h-[120px]" name="steps" value={steps} onChange={handleChange}/>
+                    <div className="text-red-500 leading-4 min-h-[15px] mb-2 font-bold">{errors.steps}</div>
                   </form>
                 </div>
                 <div className="flex items-center justify-between p-6 border-t border-solid border-blueGray-200 rounded-b">
                   <button
-                    className="px-5 py-2 text-sm leading-5 rounded-full font-semibold"
-                    type="button" onClick={() => props.setShowModal(false)}
+                    className="px-5 py-2 text-sm leading-5 rounded-md font-semibold border-orange-600 border-1 hover:bg-orange-300 hover:border-orange-300"
+                    type="button" onClick={() => setShowModal({show: false, editMode: false})}
                   >
                     Close
                   </button>
                   <button
-                    className="px-5 py-2 text-sm leading-5 rounded-full font-semibold"
-                    type="button" onClick={() => props.setShowModal(false)}
+                    className="px-5 py-2 text-sm leading-5 rounded-md font-semibold bg-orange-600"
+                    type="button" onClick={handleSave}
                   >
                     Submit
                   </button>

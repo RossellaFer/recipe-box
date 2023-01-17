@@ -13,11 +13,18 @@ module.exports = {
     colors: {
       'transparent': 'transparent',
       'white': '#ffffff',
+      'red': {
+        400: '#f87171',
+        500: '#ef4444'
+      },
       'blue': '#1fb6ff',
       'purple': '#7e5bef',
       'pink': '#FFC0CB',
       'dark-pink': '#ff49db',
-      'orange': '#ff9470',
+      'orange': {
+        300: '#fdba74',
+        600: '#ff9470',
+      },
       'green': {
         200: '#bbf7d0',
         400: '#4ade80',

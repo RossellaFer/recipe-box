@@ -14,8 +14,8 @@ export function Recipe(props) {
             <header className='basis-1/8 py-4 flex justify-between'>
                 <h3 className='text-3xl font-bold text-green-600'>{props.title}</h3>
                 <div className=''>
-                    <button className="px-5 py-2 mr-2 text-sm leading-5 rounded-md font-semibold bg-yellow" type="button" onClick={() => props.setShowModal({show: true, editMode: true})} >Edit</button>
-                    <button className="px-5 py-2 text-sm leading-5 rounded-md font-semibold bg-red-400" type="button">Delete</button>
+                    <button className="px-5 py-2 mr-2 text-sm leading-5 rounded-md font-semibold bg-yellow border-yellow border-2 hover:bg-transparent" type="button" onClick={() => props.setShowModal({show: true, editMode: true})} >Edit</button>
+                    <button className="px-5 py-2 text-sm leading-5 rounded-md font-semibold bg-red-400 border-red-400 border-2 hover:bg-transparent" type="button">Delete</button>
                 </div>
             </header>
             <section className='basis-2/8'>

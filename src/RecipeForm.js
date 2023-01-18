@@ -1,10 +1,11 @@
-import { useState, } from "react";
+import { useEffect, useState, } from "react";
 
 const RecipeForm = ({showModal, setShowModal, onSave, currentRecipe = {}}) => {
   const [recipeData, setRecipeData] = useState(currentRecipe);
   const [errors, setErrors] = useState('');
 
   const { title, ingredients, steps } = recipeData;
+
 
   const validateData = () => {
     let errors = {};

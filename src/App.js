@@ -6,10 +6,12 @@ import RecipeForm from './RecipeForm';
 
 function App() {
   //useState always returns an array with 2 values, the  current state and the function to update the state
-  const [recipes, setRecipes] = useState([]);
-  const [currentRecipe, setCurrentRecipe] = useState(() => {
+  const [recipes, setRecipes] = useState(() => {
     const saved = JSON.parse(localStorage.getItem("recipes"));
-    return saved[0] || staticRecipe[0]
+    return saved || staticRecipe
+  });
+  const [currentRecipe, setCurrentRecipe] = useState(() => {
+    return recipes[0] || staticRecipe[0]
   });
 
   const [showModal, setShowModal] = useState({
@@ -18,18 +20,9 @@ function App() {
   });
   
   useEffect(() => {
-		const recipes = JSON.parse(localStorage.getItem('recipes'));
-		if (recipes.legth) {
-			setRecipes(recipes);
-		}
-    else {
-      setRecipes(staticRecipe)
-    }
-	}, []);
-
-  useEffect(() => {
 		localStorage.setItem('recipes', JSON.stringify(recipes));
 	}, [recipes]);
+
 
   const handleSave = (values) => {
     setCurrentRecipe(values);

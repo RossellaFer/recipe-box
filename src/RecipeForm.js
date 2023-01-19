@@ -1,11 +1,29 @@
 import { useEffect, useState, } from "react";
+import { v4 as uuidv4 } from 'uuid';
+import { recipe } from "./data";
 
-const RecipeForm = ({showModal, setShowModal, onSave, currentRecipe = {}}) => {
+const RecipeForm = ({showModal, setShowModal, onSave, onEdit, currentRecipe = {}}) => {
+  const initialCurrentRecipe = {
+    id: uuidv4(),
+    title: '',
+    ingredients: '',
+    steps: '',
+  }
+
   const [recipeData, setRecipeData] = useState(currentRecipe);
   const [errors, setErrors] = useState('');
 
+  
+  useEffect(() => {
+    if(showModal.editMode) {
+      setRecipeData(currentRecipe);
+    }
+    else {
+      setRecipeData(initialCurrentRecipe)
+    }
+  },[showModal.editMode])
+  
   const { title, ingredients, steps } = recipeData;
-
 
   const validateData = () => {
     let errors = {};
@@ -37,14 +55,26 @@ const RecipeForm = ({showModal, setShowModal, onSave, currentRecipe = {}}) => {
     }
 
     setErrors({});
-    onSave(recipeData);
+    const formattedRecipeData = {
+      title: recipeData.title,
+      id: recipeData.id,
+      ingredients: recipeData.ingredients.split('\\'),
+      steps: recipeData.steps.split('\\')
+    }
+
+    if(showModal.editMode) {
+      onEdit(formattedRecipeData);
+    }
+    else {
+      onSave(formattedRecipeData);
+    }
   }
   
   return (
     <>
       {showModal.show ? (
         <>
-        <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto z-50 fixed inset-0 bg-gray bg-opacity-75">
             <div className="relative w-auto my-6 mx-auto max-w-3xl min-w-[400px]">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">

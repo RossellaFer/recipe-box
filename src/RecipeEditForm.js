@@ -1,18 +1,17 @@
-import { useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import { useEffect, useState, } from "react";
 
-const RecipeForm = ({showModal, setShowModal, onSave}) => {
-  const initialCurrentRecipe = {
-    id: uuidv4(),
-    title: '',
-    ingredients: '',
-    steps: '',
-  }
-  
-  const [newRecipeData, setNewRecipeData] = useState(initialCurrentRecipe);
+const RecipeEditForm = ({showEditModal, setShowEditModal, onEdit, currentRecipe = {}}) => {
+
+  const [recipeData, setRecipeData] = useState(currentRecipe);
   const [errors, setErrors] = useState('');
-
-  const { title, ingredients, steps } = newRecipeData;
+  
+  useEffect(() => {
+    setRecipeData(currentRecipe);
+  },[currentRecipe])
+  
+  const {title} = recipeData;
+  const ingredients = recipeData.ingredients.join(' \\ ');
+  const steps = recipeData.steps.join(' \\ ');
 
 
   const validateData = () => {
@@ -34,10 +33,16 @@ const RecipeForm = ({showModal, setShowModal, onSave}) => {
 
   const handleChange = (event) => {
     const {name, value} = event.target;
-    setNewRecipeData((prevData) => ({...prevData, [name]: value}))
-  }
+    let formattedValue = value;
+    if(name !== 'title') {
+       formattedValue = value.split(' \\ ')
+    }
+    setRecipeData((prevData) => {
+      return {...prevData, [name]: formattedValue}
+    }
+  )}
 
-  const handleSave = () => {
+  const handleEdit = () => {
     const errors = validateData();
     if(Object.keys(errors).length) {
       setErrors(errors);
@@ -45,30 +50,23 @@ const RecipeForm = ({showModal, setShowModal, onSave}) => {
     }
 
     setErrors({});
-    const formattedRecipeData = {
-      title: newRecipeData.title,
-      id: newRecipeData.id,
-      ingredients: newRecipeData.ingredients.split('\\'),
-      steps: newRecipeData.steps.split('\\')
-    }
-
-    onSave(formattedRecipeData)
+    onEdit(recipeData);
   }
   
   return (
     <>
-      {showModal ? (
+      {showEditModal ? (
         <>
         <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto z-50 fixed inset-0 bg-gray bg-opacity-75">
             <div className="relative w-auto my-6 mx-auto max-w-3xl min-w-[400px]">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
-                  <h3 className="text-3xl font-bold text-orange-600">Add recipe</h3>
+                  <h3 className="text-3xl font-bold text-orange-600">Edit recipe</h3>
                   <button
                     className="bg-transparent border-0 text-black float-right"
                   >
-                    <span className="text-black opacity-7 h-6 w-6 text-xl block bg-gray-400 py-0 rounded-full" onClick={() => setShowModal(false)}>
+                    <span className="text-black opacity-7 h-6 w-6 text-xl block bg-gray-400 py-0 rounded-full" onClick={() => setShowEditModal(false)}>
                         X
                     </span>
                   </button>
@@ -76,6 +74,7 @@ const RecipeForm = ({showModal, setShowModal, onSave}) => {
                 <div className="relative p-6 flex-auto">
                   <form className="px-8 pt-6 pb-8 w-full">
                     <label for="title" className="block text-black text-sm font-bold mb-1">
+                        Test
                       Title
                     </label>
                     <input className="shadow appearance-none border rounded w-full mb-2 py-2 px-1 text-black" type="text" name="title" value={title} onChange={handleChange}/>
@@ -95,13 +94,13 @@ const RecipeForm = ({showModal, setShowModal, onSave}) => {
                 <div className="flex items-center justify-between p-6 border-t border-solid border-blueGray-200 rounded-b">
                   <button
                     className="px-5 py-2 text-sm leading-5 rounded-md font-semibold border-orange-600 border-1 hover:bg-orange-300 hover:border-orange-300"
-                    type="button" onClick={() => setShowModal(false)}
+                    type="button" onClick={() => setShowEditModal(false)}
                   >
                     Close
                   </button>
                   <button
                     className="px-5 py-2 text-sm leading-5 rounded-md font-semibold bg-orange-600"
-                    type="button" onClick={handleSave}
+                    type="button" onClick={handleEdit}
                   >
                     Submit
                   </button>
@@ -116,4 +115,4 @@ const RecipeForm = ({showModal, setShowModal, onSave}) => {
   );
 };
 
-export default RecipeForm;
+export default RecipeEditForm;

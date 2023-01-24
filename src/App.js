@@ -75,15 +75,15 @@ function App() {
         </header>
 
         <section className='container mx-auto flex flex-col-reverse gap-4 md:flex-row'>
-          <article className='md:basis-3/4 p-6 shadow-xl overflow-auto flex flex-col w-full justify-between max-h-[50vh] md:max-h-[70vh] bg-white'>
+          <article className='md:basis-3/4 p-6 shadow-xl overflow-auto flex flex-col w-full justify-between max-h-[60vh] md:max-h-[75vh] bg-white'>
             {recipes.length === 0 &&  <EmptyRecipe setShowModal={setShowModal}/>}
             {recipes.length > 0 &&  <Recipe title={currentRecipe.title} ingredients={currentRecipe.ingredients} steps={currentRecipe.steps} setShowEditModal={setShowEditModal} handleDelete={handleDelete} setShowModal={setShowModal}/>}
           </article>
-          <nav className='md:basis-1/4 py-6 px-3 shadow-xl max-h-[20vh] md:max-h-[70vh] overflow-auto scrollbar bg-white'>
-            <p className='text-xl text-teal-600 font-bold border-b-1'>Recipes list</p>
+          <nav className='md:basis-1/4 py-6 px-3 shadow-xl max-h-[20vh] md:max-h-[75vh] overflow-auto scrollbar bg-white'>
+            <p className='text-xl text-teal-600 font-bold border-b-1 pb-2'>Recipes list</p>
             <ul className='pb-2 divide-y divide-solid divide-gray'>
               {recipes.map((recipe, index) => {
-                return <li key={recipe.id} onClick={handleClickFromRecipeList} data-recipe-id={recipe.id} className={`cursor-pointer py-2 md:py-2 px-2 0 ${recipe.id === currentRecipe.id ? 'bg-yellow' : null}`}>{recipe.title}</li>
+                return <li key={recipe.id} onClick={handleClickFromRecipeList} data-recipe-id={recipe.id} className={`cursor-pointer py-2 md:py-2 px-2 0 ${recipe.id === currentRecipe.id ? 'bg-green-200' : null}`}>{recipe.title}</li>
               })}
             </ul>
           </nav>  

@@ -64,7 +64,7 @@ const RecipeForm = ({showModal, setShowModal, onSave}) => {
             <div className="relative w-auto my-6 mx-auto max-w-3xl min-w-[400px]">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
-                  <h3 className="text-3xl font-bold text-orange-600">Add recipe</h3>
+                  <h3 className="text-3xl font-bold text-teal-600">Add recipe</h3>
                   <button
                     className="bg-transparent border-0 text-black float-right"
                   >
@@ -75,17 +75,17 @@ const RecipeForm = ({showModal, setShowModal, onSave}) => {
                 </div>
                 <div className="relative p-6 flex-auto">
                   <form className="px-8 pt-6 pb-8 w-full">
-                    <label for="title" className="block text-black text-sm font-bold mb-1">
+                    <label for="title" className="block text-dark-gray text-sm font-bold mb-1">
                       Title
                     </label>
                     <input className="shadow appearance-none border rounded w-full mb-2 py-2 px-1 text-black" type="text" name="title" value={title} onChange={handleChange}/>
                     <div className="text-red-500 leading-4 min-h-[15px] mb-2 font-bold">{errors.title}</div>
-                    <label for="ingredients" className="block text-black text-sm font-bold mb-1">
+                    <label for="ingredients" className="block text-dark-gray text-sm font-bold mb-1">
                       Ingredients
                     </label>
                     <textarea placeholder={'Separate each ingredient with a "\\": \n\nMilk \\ 2 Eggs \\ 1/3 Cup Sugar'} className="shadow appearance-none border rounded w-full py-2 px-2 text-black text-sm min-h-[80px]" name="ingredients" value={ingredients} onChange={handleChange}/>
                     <div className="text-red-500 leading-4 min-h-[15px] mb-2 font-bold">{errors.ingredients}</div>
-                    <label for="steps" className="block text-black text-sm font-bold mb-1">
+                    <label for="steps" className="block text-dark-gray text-sm font-bold mb-1">
                       Steps
                     </label>
                     <textarea placeholder={'Separate each step with a "\\": \n\nPreheat oven to 350°F \\ \nCombine ingredients in pie crust \\ \nBake until crust is golden brown. \\'} className="shadow appearance-none border rounded w-full py-2 px-2 text-black text-sm min-h-[120px]" name="steps" value={steps} onChange={handleChange}/>
@@ -94,13 +94,13 @@ const RecipeForm = ({showModal, setShowModal, onSave}) => {
                 </div>
                 <div className="flex items-center justify-between p-6 border-t border-solid border-blueGray-200 rounded-b">
                   <button
-                    className="px-5 py-2 text-sm leading-5 rounded-md font-semibold border-orange-600 border-1 hover:bg-orange-300 hover:border-orange-300"
+                    className="px-5 py-2 text-sm leading-5 rounded-md font-semibold border-teal-600 border-1 hover:bg-green-200 hover:border-green-200"
                     type="button" onClick={() => setShowModal(false)}
                   >
                     Close
                   </button>
                   <button
-                    className="px-5 py-2 text-sm leading-5 rounded-md font-semibold bg-orange-600"
+                    className="px-5 py-2 text-sm leading-5 rounded-md font-semibold bg-green-200"
                     type="button" onClick={handleSave}
                   >
                     Submit

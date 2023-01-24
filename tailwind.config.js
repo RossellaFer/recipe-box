@@ -27,7 +27,9 @@ module.exports = {
       'pink': '#FFC0CB',
       'dark-pink': '#ff49db',
       'orange': {
+        200: '#fed7aa',
         300: '#fdba74',
+        400: '#fb923c',
         600: '#ff9470',
       },
       'green': {

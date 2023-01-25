@@ -66,7 +66,6 @@ function App() {
   }
 
   const currentRecipe = recipes.find((recipe => recipe.id === currentRecipeId));
-  console.log(recipes)
  
   return (
     <div className="App w-screen px-6 py-9 flex flex-col min-h-screen shadow-xl bg-gradient-to-r from-cyan-500 via-cyan-300 via-cyan-200 to-green-200">

@@ -5,7 +5,6 @@ const RecipeEditForm = ({setShowEditModal, onEdit, currentRecipe = {}}) => {
   const [currentlyEditedRecipe, setCurrentlyEditedRecipe] = useState(currentRecipe);
   const [errors, setErrors] = useState('');
   
-  console.log(currentRecipe)
   const {title} = currentlyEditedRecipe;
   const ingredients = currentlyEditedRecipe.ingredients.join(' \\ ');
   const steps = currentlyEditedRecipe.steps.join(' \\ ');

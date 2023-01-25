@@ -1,17 +1,14 @@
-import { useEffect, useState, } from "react";
+import { useState } from "react";
 
-const RecipeEditForm = ({showEditModal, setShowEditModal, onEdit, currentRecipe = {}}) => {
+const RecipeEditForm = ({setShowEditModal, onEdit, currentRecipe = {}}) => {
 
-  const [recipeData, setRecipeData] = useState(currentRecipe);
+  const [currentlyEditedRecipe, setCurrentlyEditedRecipe] = useState(currentRecipe);
   const [errors, setErrors] = useState('');
   
-  useEffect(() => {
-    setRecipeData(currentRecipe);
-  },[currentRecipe])
-  
-  const {title} = recipeData;
-  const ingredients = recipeData.ingredients.join(' \\ ');
-  const steps = recipeData.steps.join(' \\ ');
+  console.log(currentRecipe)
+  const {title} = currentlyEditedRecipe;
+  const ingredients = currentlyEditedRecipe.ingredients.join(' \\ ');
+  const steps = currentlyEditedRecipe.steps.join(' \\ ');
 
 
   const validateData = () => {
@@ -37,12 +34,12 @@ const RecipeEditForm = ({showEditModal, setShowEditModal, onEdit, currentRecipe 
     if(name !== 'title') {
        formattedValue = value.split(' \\ ')
     }
-    setRecipeData((prevData) => {
+    setCurrentlyEditedRecipe((prevData) => {
       return {...prevData, [name]: formattedValue}
     }
   )}
 
-  const handleEdit = () => {
+  const handleEditForm = () => {
     const errors = validateData();
     if(Object.keys(errors).length) {
       setErrors(errors);
@@ -50,12 +47,11 @@ const RecipeEditForm = ({showEditModal, setShowEditModal, onEdit, currentRecipe 
     }
 
     setErrors({});
-    onEdit(recipeData);
+    onEdit(currentRecipe);
   }
   
   return (
     <>
-      {showEditModal ? (
         <>
         <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto z-50 fixed inset-0 bg-gray bg-opacity-75">
@@ -99,7 +95,7 @@ const RecipeEditForm = ({showEditModal, setShowEditModal, onEdit, currentRecipe 
                   </button>
                   <button
                     className="px-5 py-2 text-sm leading-5 rounded-md font-semibold bg-green-200"
-                    type="button" onClick={handleEdit}
+                    type="button" onClick={handleEditForm}
                   >
                     Submit
                   </button>
@@ -109,7 +105,6 @@ const RecipeEditForm = ({showEditModal, setShowEditModal, onEdit, currentRecipe 
           </div>
           </div>
         </>
-      ) : null}
     </>
   );
 };

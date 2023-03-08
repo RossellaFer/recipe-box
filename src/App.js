@@ -12,7 +12,8 @@ function App() {
     const saved = JSON.parse(localStorage.getItem("recipes"));
     return saved || staticRecipe
   });
-  const [currentRecipe, setCurrentRecipe] = useState(staticRecipe[0]);
+
+  const [currentRecipeId, setCurrentRecipeId] = useState(recipes.length ? recipes[0].id : null);
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   
@@ -20,25 +21,19 @@ function App() {
 		localStorage.setItem('recipes', JSON.stringify(recipes));
 	}, [recipes]);
 
-  //run this once when the page renders the first time
-  useEffect(() => {
-		setCurrentRecipe(recipes[0] || staticRecipe[0]);
-	}, []);
-
-
-  const handleSave = (values) => {
-    setRecipes([...recipes, values]);
-    setCurrentRecipe(values);
+  const handleSave = (formValues) => {
+    setRecipes([...recipes, formValues]);
+    setCurrentRecipeId(formValues.id);
     setShowModal(false);
   };
 
-  const handleEdit = (values) => {
+  const handleEdit = (formValues) => {
     const newRecipesList = recipes.map((recipe) => {
-      if(recipe.id === values.id) {
+      if(recipe.id === formValues.id) {
         const updatedRecipe = {
-          ...values
+          ...formValues
         }
-        setCurrentRecipe(updatedRecipe)
+        setCurrentRecipeId(updatedRecipe.id);
         return updatedRecipe;
       }
       return recipe;
@@ -48,23 +43,29 @@ function App() {
   }
 
   const handleDelete = () => {
+    const currentRecipe = recipes.find((recipe => recipe.id === currentRecipeId));
     if(window.confirm(`Are you sure you want to delete ${currentRecipe.title}?`)) {
       const filteredRecipes = recipes.filter((recipe) => {
-        
         return recipe.id !== currentRecipe.id;
       });
       setRecipes(filteredRecipes);
-      setCurrentRecipe(recipes[0]);
+      if(recipes.length) {
+        setCurrentRecipeId(recipes[0].id);
+      }
+      else {
+        //null is better for empty values like an ID 
+        setCurrentRecipeId(null);
+        setRecipes([]);
+      }
     }
   }
 
   const handleClickFromRecipeList = (e) => {
     const clickedRecipe = e.currentTarget.getAttribute('data-recipe-id');
-    const correspondingRecipe = recipes.find(recipe => recipe.id === clickedRecipe);
-    setCurrentRecipe(correspondingRecipe);
+    setCurrentRecipeId(clickedRecipe);
   }
 
-
+  const currentRecipe = recipes.find((recipe => recipe.id === currentRecipeId));
  
   return (
     <div className="App w-screen px-6 py-9 flex flex-col min-h-screen shadow-xl bg-gradient-to-r from-cyan-500 via-cyan-300 via-cyan-200 to-green-200">
@@ -88,8 +89,8 @@ function App() {
             </ul>
           </nav>  
         </section>
-        <RecipeForm showModal={showModal} setShowModal={setShowModal} onSave={handleSave}/>
-        <RecipeEditForm showEditModal={showEditModal} setShowEditModal={setShowEditModal} onEdit={handleEdit} {...{currentRecipe}}/>
+        {showModal && <RecipeForm setShowModal={setShowModal} onSave={handleSave}/>}
+        {showEditModal &&  <RecipeEditForm setShowEditModal={setShowEditModal} onEdit={handleEdit} {...{currentRecipe}}/>}
         </div>
       </div>
   );

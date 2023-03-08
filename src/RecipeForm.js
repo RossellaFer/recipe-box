@@ -14,7 +14,6 @@ const RecipeForm = ({showModal, setShowModal, onSave}) => {
 
   const { title, ingredients, steps } = newRecipeData;
 
-
   const validateData = () => {
     let errors = {};
     if(!title) {
@@ -57,7 +56,6 @@ const RecipeForm = ({showModal, setShowModal, onSave}) => {
   
   return (
     <>
-      {showModal ? (
         <>
         <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto z-50 fixed inset-0 bg-gray bg-opacity-75">
@@ -111,7 +109,6 @@ const RecipeForm = ({showModal, setShowModal, onSave}) => {
           </div>
           </div>
         </>
-      ) : null}
     </>
   );
 };

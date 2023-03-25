@@ -15,8 +15,9 @@ function App() {
   });
 
   const [currentRecipeId, setCurrentRecipeId] = useState(recipes.length ? recipes[0].id : null);
-  const [showModal, setShowModal] = useContext(ModalContext);
-  const [showEditModal, setShowEditModal] = useContext(ModalContext);
+  const { modal, editModal } = useContext(ModalContext);
+  const [showModal, setShowModal] = modal;
+  const [showEditModal, setShowEditModal] = editModal;
   
   useEffect(() => {
 		localStorage.setItem('recipes', JSON.stringify(recipes));

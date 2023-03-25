@@ -9,7 +9,8 @@ const RecipeForm = ({onSave}) => {
     ingredients: '',
     steps: '',
   }
-  const [showModal, setShowModal] = useContext(ModalContext);
+  const { modal, editModal } = useContext(ModalContext);
+  const [showModal, setShowModal] = modal;
   
   const [newRecipeData, setNewRecipeData] = useState(initialCurrentRecipe);
   const [errors, setErrors] = useState('');

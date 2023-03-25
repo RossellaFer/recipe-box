@@ -3,8 +3,9 @@ import { ModalContext } from './Context.js';
 
 const Recipe = ({title, id, ingredients, steps, handleDelete}) => {
 
-    const [showModal, setShowModal] = useContext(ModalContext);
-    const [showEditModal, setShowEditModal] = useContext(ModalContext);
+    const { modal, editModal } = useContext(ModalContext);
+    const [showModal, setShowModal] = modal;
+    const [showEditModal, setShowEditModal] = editModal;
     
     const ingredientsList = ingredients.map((ingredient, index) => {
         return <li key={index}>{ingredient}</li>

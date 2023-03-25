@@ -6,10 +6,10 @@ export const ModalContext = createContext();
 const ModalProvider = (props) => {
         // this state will be shared with all components 
     const [showModal, setShowModal] = useState(false);
-    const [showEditModal, setShowEditModal] = useState(false)
+    const [showEditModal, setShowEditModal] = useState(false);
 
     return (
-        <ModalContext.Provider value={[showModal, setShowModal, showEditModal, setShowEditModal]}>
+        <ModalContext.Provider value={{ modal: [showModal, setShowModal], editModal: [showEditModal, setShowEditModal]}}>
             {props.children}
         </ModalContext.Provider>
     );

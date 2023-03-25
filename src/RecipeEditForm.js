@@ -3,7 +3,8 @@ import { ModalContext } from './Context.js';
 
 const RecipeEditForm = ({ onEdit, currentRecipe = {}}) => {
 
-  const [showEditModal, setShowEditModal] = useContext(ModalContext);
+  const { modal, editModal } = useContext(ModalContext);
+  const [showEditModal, setShowEditModal] = editModal;
   const [currentlyEditedRecipe, setCurrentlyEditedRecipe] = useState(currentRecipe);
   const [errors, setErrors] = useState('');
   

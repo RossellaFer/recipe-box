@@ -1,6 +1,7 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { recipe as staticRecipe } from './data.js';
+import { ModalContext } from './Context.js';
 import Recipe from './Recipe.js';
 import RecipeForm from './RecipeForm';
 import RecipeEditForm from './RecipeEditForm';
@@ -10,12 +11,12 @@ function App() {
   //useState always returns an array with 2 values, the  current state and the function to update the state
   const [recipes, setRecipes] = useState(() => {
     const saved = JSON.parse(localStorage.getItem("recipes"));
-    return saved || staticRecipe
+    return saved || staticRecipe;
   });
 
   const [currentRecipeId, setCurrentRecipeId] = useState(recipes.length ? recipes[0].id : null);
-  const [showModal, setShowModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
+  const [showModal, setShowModal] = useContext(ModalContext);
+  const [showEditModal, setShowEditModal] = useContext(ModalContext);
   
   useEffect(() => {
 		localStorage.setItem('recipes', JSON.stringify(recipes));

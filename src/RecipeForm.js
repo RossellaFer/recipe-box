@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { v4 as uuidv4 } from 'uuid';
+import { ModalContext } from './Context.js';
 
-const RecipeForm = ({showModal, setShowModal, onSave}) => {
+const RecipeForm = ({onSave}) => {
   const initialCurrentRecipe = {
     id: uuidv4(),
     title: '',
     ingredients: '',
     steps: '',
   }
+  const [showModal, setShowModal] = useContext(ModalContext);
   
   const [newRecipeData, setNewRecipeData] = useState(initialCurrentRecipe);
   const [errors, setErrors] = useState('');

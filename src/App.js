@@ -54,7 +54,7 @@ function App() {
         setCurrentRecipeId(recipes[0].id);
       }
       else {
-        //null is better for empty values like an ID 
+        //null should be used for empty values like an ID 
         setCurrentRecipeId(null);
         setRecipes([]);
       }

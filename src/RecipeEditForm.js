@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ModalContext } from './Context.js';
 
-const RecipeEditForm = ({setShowEditModal, onEdit, currentRecipe = {}}) => {
+const RecipeEditForm = ({ onEdit, currentRecipe = {}}) => {
 
+  const { modal, editModal } = useContext(ModalContext);
+  const [showEditModal, setShowEditModal] = editModal;
   const [currentlyEditedRecipe, setCurrentlyEditedRecipe] = useState(currentRecipe);
   const [errors, setErrors] = useState('');
   

@@ -41,7 +41,9 @@ const RecipeEditForm = ({ onEdit, currentRecipe = {}}) => {
     }
   )}
 
-  const handleEditForm = () => {
+  const handleEditForm = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     const errors = validateData();
     if(Object.keys(errors).length) {
       setErrors(errors);
@@ -69,8 +71,8 @@ const RecipeEditForm = ({ onEdit, currentRecipe = {}}) => {
                     </span>
                   </button>
                 </div>
-                <div className="relative p-6 flex-auto">
-                  <form className="px-8 pt-6 pb-8 w-full">
+                <div className="relative flex-auto">
+                  <form className="px-8 pt-6 pb-8 w-full" onSubmit={handleEditForm}>
                     <label for="title" className="block text-dark-gray text-sm font-bold mb-1">
                       Title
                     </label>
@@ -86,21 +88,21 @@ const RecipeEditForm = ({ onEdit, currentRecipe = {}}) => {
                     </label>
                     <textarea placeholder={'Separate each step with a "\\": \n\nPreheat oven to 350°F \\ \nCombine ingredients in pie crust \\ \nBake until crust is golden brown. \\'} className="shadow appearance-none border rounded w-full py-2 px-2 text-black text-sm min-h-[120px]" name="steps" value={steps} onChange={handleChange}/>
                     <div className="text-red-500 leading-4 min-h-[15px] mb-2 font-bold">{errors.steps}</div>
+                      <div className="flex items-center justify-between px-0 py-6 border-t border-solid border-blueGray-200 rounded-b">
+                        <button
+                          className="px-5 py-2 text-sm leading-5 rounded-md font-semibold border-teal-600 border-1 hover:bg-green-200 hover:border-green-200"
+                          type="button" onClick={() => setShowEditModal(false)}
+                        >
+                          Close
+                        </button>
+                        <button
+                          className="px-5 py-2 text-sm leading-5 rounded-md font-semibold bg-green-200"
+                          type="submit"
+                        >
+                          Submit
+                        </button>
+                      </div>
                   </form>
-                </div>
-                <div className="flex items-center justify-between p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <button
-                    className="px-5 py-2 text-sm leading-5 rounded-md font-semibold border-teal-600 border-1 hover:bg-green-200 hover:border-green-200"
-                    type="button" onClick={() => setShowEditModal(false)}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="px-5 py-2 text-sm leading-5 rounded-md font-semibold bg-green-200"
-                    type="button" onClick={handleEditForm}
-                  >
-                    Submit
-                  </button>
                 </div>
               </div>
             </div>

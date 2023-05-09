@@ -56,6 +56,12 @@ module.exports = {
       serif: ['Merriweather', 'serif'],
     },
     extend: {
+      keyframes: {
+        wiggle: {
+          '0%, 100%': { transform: 'rotate(-20deg)' },
+          '50%': { transform: 'rotate(20deg)' },
+        }
+      },
       spacing: {
         '128': '32rem',
         '144': '36rem',
@@ -67,6 +73,9 @@ module.exports = {
         '0': '0',
         '1': '1px',
         '15': '15px'
+      },
+      animation: {
+        'wiggle': 'wiggle 1s ease-in-out infinite',
       }
     }
   },
